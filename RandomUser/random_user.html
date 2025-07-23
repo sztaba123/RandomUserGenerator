@@ -19,6 +19,29 @@
         <p class="lead mb-0">Create, view and copy random user profiles with ease!</p>
         <span class="position-absolute top-0 end-0 m-3 badge bg-warning text-dark fs-6 shadow">v1.0</span>
     </header>
+    
+    <!-- Floating Particles Background -->
+    <div class="floating-particles">
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+        <div class="particle"></div>
+    </div>
+    
     <main class="container mt-0 pt-5">
         <div class="row justify-content-center ">
             <div class="col-md-5 d-flex flex-column align-items-center mb-4">
@@ -89,7 +112,7 @@
                             <i class="bi bi-clipboard"></i> Copy User Data
                         </button>
                         <button class="btn btn-info btn-concave m-2 px-4 py-2 rounded-pill shadow-sm" id="copy-photo" onclick="copyUserPhoto()">
-                            <i class="bi bi-image"></i> Copy User Photo
+                            <i class="bi bi-image"></i> Download User Photo
                         </button>
                     </div>
                     <!-- Add Bootstrap Icons CDN in <head> if not already included -->
@@ -108,6 +131,12 @@
             <p id="alertMessage">User data copied to clipboard!</p>
             <button onclick="closeCustomAlert()">OK</button>
         </div>
+    </div>
+    <div id="customAlertOverlayPhoto" class="custom-alert-overlay">
+        <div class="custom-alert">
+            <h3>✅ Success!</h3>
+            <p id="alertMessagePhoto">User photo downloaded</p>
+            <button onclick="closeCustomAlertPhoto()">OK</button>
     </div>
 
     <!-- Bootstrap 5.3 JS Bundle -->

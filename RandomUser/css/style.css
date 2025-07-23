@@ -1,94 +1,498 @@
+/* ========== STYLIZACJA TŁA STRONY ========== */
 body {
-    font-family: Arial, sans-serif;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sa        inset 0 1px 0 rgba(255, 255, 255, 0.6),  /* Jaśniejszy cień wewnętrzny na górze */
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);       /* Ciemniejszy cień wewnętrzny na dole */
+    border-color: rgba(255, 255, 255, 0.5);      /* Jaśniejsza ramka */
+}
+
+/* Animacja shimmer - ruch świetlnego paska */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);  /* Start: lewy górny róg */
+    }
+    50% {
+        transform: translateX(0%) translateY(0%) rotate(45deg);        /* Środek: centrum karty */
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);    /* Koniec: prawy dolny róg */
+    }
+}
+
+/* ========== STYLIZACJA TŁA STRONY ========== */
+body {
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nowoczesna czcionka systemu Windows */
     margin: 0;
     padding: 0;
-    background-color: #b1eaff;
+    /* Gradient tła pod kątem 135° (ukośnie z lewego górnego do prawego dolnego rogu) */
+    background: linear-gradient(135deg, 
+        #b1eaff 0%,     /* Jasnoniebieski na początku */
+        #85d8ff 25%,    /* Nieco ciemniejszy niebieski */
+        #a8e6ff 50%,    /* Średni niebieski w środku */
+        #c7f0ff 75%,    /* Bardzo jasny niebieski */
+        #b1eaff 100%);  /* Powrót do pierwszego koloru */
+    background-attachment: fixed;  /* Tło się nie przewija ze stroną */
+    min-height: 100vh;            /* Minimum 100% wysokości ekranu */
+    position: relative;
+    overflow-x: hidden;           /* Nie pokazuj poziomego paska przewijania */
 }
 
+/* Pseudo-element tworzący animowane tło z kółkami */
+body::before {
+    content: '';           /* Tworzy pusty pseudo-element */
+    position: fixed;       /* Pozostaje na miejscu podczas przewijania */
+    top: 0;
+    left: 0;
+    width: 100%;
+    height: 100%;
+    /* 3 radial-gradienty tworzące świecące kółka w różnych miejscach */
+    background: 
+        radial-gradient(circle at 20% 80%, rgba(120, 200, 255, 0.3) 0%, transparent 50%), /* Kółko w lewym dolnym rogu */
+        radial-gradient(circle at 80% 20%, rgba(255, 255, 255, 0.2) 0%, transparent 50%),   /* Kółko w prawym górnym rogu */
+        radial-gradient(circle at 40% 40%, rgba(180, 230, 255, 0.2) 0%, transparent 50%);  /* Kółko w środku */
+    pointer-events: none;  /* Nie blokuje kliknięć */
+    z-index: -1;          /* Jest za wszystkimi innymi elementami */
+    animation: backgroundFloat 20s ease-in-out infinite;  /* Animacja przez 20 sekund w pętli */
+}
+
+/* Animacja subtelnego ruchu tła */
+@keyframes backgroundFloat {
+    0%, 100% {
+        transform: translateY(0px) rotate(0deg);      /* Start i koniec - bez ruchu */
+    }
+    33% {
+        transform: translateY(-10px) rotate(1deg);     /* 1/3 animacji - w górę + lekki obrót */
+    }
+    66% {
+        transform: translateY(5px) rotate(-1deg);      /* 2/3 animacji - w dół + obrót w drugą stronę */
+    }
+}
+
+/* ========== STYLIZACJA ZDJĘCIA UŻYTKOWNIKA ========== */
 #user-photo {
-    border: 2px solid black;
-    border-radius: 50%;
+    border: 2px solid black;  /* Czarna ramka wokół zdjęcia */
+    border-radius: 50%;       /* Okrągły kształt */
 }
 
+/* Efekt hover dla zdjęcia (stary - zostanie nadpisany przez nowy poniżej) */
 #user-photo:hover {
-    transform: scale(1.1);
-    transition: transform 0.3s ease;
+    transform: scale(1.1);           /* Powiększenie o 10% */
+    transition: transform 0.3s ease; /* Płynna animacja przez 0.3 sekundy */
 }
 
+/* ========== STYLIZACJA GŁÓWNEJ KARTY ========== */
 .card {
-    background-color: rgb(106, 160, 253);
-    border: 1px solid #007bff;
+    /* Gradient tła karty pod kątem 135° z różnymi odcieniami niebieskiego */
+    background: linear-gradient(135deg, 
+        rgba(106, 160, 253, 0.95) 0%,     /* Niebieski z 95% nieprzezroczystością */
+        rgba(75, 140, 255, 0.9) 25%,      /* Ciemniejszy niebieski z 90% nieprzezroczystością */
+        rgba(106, 160, 253, 0.95) 50%,    /* Powrót do pierwszego koloru */
+        rgba(135, 180, 255, 0.9) 75%,     /* Jaśniejszy niebieski z 90% nieprzezroczystością */
+        rgba(106, 160, 253, 0.95) 100%);  /* Znów pierwszy kolor */
+    border: 2px solid rgba(255, 255, 255, 0.3);  /* Półprzezroczysta biała ramka */
+    border-radius: 25px !important;               /* Bardzo zaokrąglone rogi (25px) */
+    backdrop-filter: blur(10px);                  /* Efekt szkła - rozmycie tła za kartą */
+    /* Wielowarstwowe cienie dla efektu głębi */
+    box-shadow: 
+        0 15px 35px rgba(0, 123, 255, 0.3),      /* Niebieski cień główny */
+        0 5px 15px rgba(0, 0, 0, 0.2),           /* Czarny cień dla kontrastu */
+        inset 0 1px 0 rgba(255, 255, 255, 0.4),  /* Biały cień wewnętrzny na górze (światło) */
+        inset 0 -1px 0 rgba(0, 0, 0, 0.1);       /* Czarny cień wewnętrzny na dole (cień) */
+    position: relative;    /* Pozwala na umieszczenie pseudo-elementów */
+    overflow: hidden;      /* Ukrywa elementy wychodzące poza kartę */
+    /* Płynna animacja z cubic-bezier dla elastycznego efektu */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
 }
 
+/* Pseudo-element tworzący efekt shimmer (błyszczenia) */
+.card::before {
+    content: '';           /* Pusty pseudo-element */
+    position: absolute;    /* Pozycjonowanie względem karty */
+    top: -50%;            /* Pozycja początkowa powyżej karty */
+    left: -50%;           /* Pozycja początkowa po lewej stronie karty */
+    width: 200%;          /* Dwukrotna szerokość karty */
+    height: 200%;         /* Dwukrotna wysokość karty */
+    /* Gradient tworzący efekt świetlny */
+    background: linear-gradient(45deg, 
+        transparent 30%,                    /* Przezroczysty początek */
+        rgba(255, 255, 255, 0.1) 50%,      /* Biały środek z 10% nieprzezroczystością */
+        transparent 70%);                   /* Przezroczysty koniec */
+    transform: rotate(45deg);  /* Obrót o 45 stopni */
+    transition: all 0.6s ease; /* Płynna animacja */
+    opacity: 0;            /* Początkowo niewidoczny */
+}
+
+/* Aktywacja efektu shimmer przy hover */
+.card:hover::before {
+    animation: shimmer 2s ease-in-out infinite;  /* Animacja shimmer przez 2 sekundy w pętli */
+    opacity: 1;            /* Staje się widoczny */
+}
+
+/* Efekt hover dla całej karty */
+.card:hover {
+    /* Intensywniejsze cienie przy hover */
+    box-shadow: 
+        0 25px 50px rgba(0, 123, 255, 0.4),      /* Większy niebieski cień */
+        0 10px 25px rgba(0, 0, 0, 0.3),          /* Większy czarny cień */
+        inset 0 1px 0 rgba(255, 255, 255, 0.6),  /* Jaśniejszy cień wewnętrzny na górze */
+        inset 0 -1px 0 rgba(0, 0, 0, 0.2);       /* Ciemniejszy cień wewnętrzny na dole */
+    border-color: rgba(255, 255, 255, 0.5);      /* Jaśniejsza ramka */
+}
+
+/* Animacja shimmer - ruch świetlnego paska */
+@keyframes shimmer {
+    0% {
+        transform: translateX(-100%) translateY(-100%) rotate(45deg);  /* Start: lewy górny róg */
+    }
+    50% {
+        transform: translateX(0%) translateY(0%) rotate(45deg);        /* Środek: centrum karty */
+    }
+    100% {
+        transform: translateX(100%) translateY(100%) rotate(45deg);    /* Koniec: prawy dolny róg */
+    }
+}
+
+/* ========== STARE STYLE DLA LIST - DO NADPISANIA ========== */
 ul.list-group{
-    border: 1px solid #007bff;
-    border-radius: 10px;
+    border: 1px solid #007bff;  /* Niebieska ramka */
+    border-radius: 10px;        /* Zaokrąglone rogi */
 }
 
 li.list-group-item {
-    border-bottom: 1px solid #000;
+    border-bottom: 1px solid #000;  /* Czarna linia oddzielająca elementy listy */
 }
 
 ul.list-group, li.list-group-item {
-    background-color: #bbf4f8 !important;
+    background-color: #bbf4f8 !important;  /* Jasnoniebieski kolor tła (wymuszony !important) */
+}
+
+/* ========== STYLIZACJA WNĘTRZA KARTY ========== */
+.card-body {
+    position: relative;  /* Pozwala na umieszczenie elementów absolutnych */
+    z-index: 2;         /* Znajduje się nad pseudo-elementami */
+    padding: 2rem !important;  /* Większy padding (32px) */
+}
+
+.card-title {
+    text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.3);  /* Cień tekstu dla lepszej czytelności */
+    color: #ffffff !important;   /* Biały kolor tekstu */
+    font-weight: 700 !important; /* Pogrubiona czcionka */
+}
+
+/* Specjalne stylowanie dla tytułu "User Data" */
+#data-tittle {
+    /* Gradient tekstu - przejście z białego do jasnoniebieskiego */
+    background: linear-gradient(45deg, #ffffff, #e3f2fd);
+    -webkit-background-clip: text;      /* Webkit: gradient tylko na tekście */
+    -webkit-text-fill-color: transparent;  /* Webkit: przezroczysty kolor wypełnienia */
+    background-clip: text;              /* Standard: gradient tylko na tekście */
+    font-size: 1.5rem !important;      /* Większy rozmiar czcionki */
+    margin-bottom: 1.5rem !important;   /* Większy margines dolny */
+}
+
+/* ========== ULEPSZONA STYLIZACJA ZDJĘCIA UŻYTKOWNIKA ========== */
+#user-photo {
+    border: 4px solid rgba(255, 255, 255, 0.8);  /* Gruba półprzezroczysta biała ramka */
+    border-radius: 50%;                           /* Okrągły kształt */
+    /* Wielowarstwowe cienie dla efektu głębi */
+    box-shadow: 
+        0 10px 30px rgba(0, 0, 0, 0.4),         /* Główny cień pod zdjęciem */
+        0 0 0 8px rgba(255, 255, 255, 0.1),     /* Świecący pierścień wokół zdjęcia */
+        inset 0 0 0 2px rgba(255, 255, 255, 0.3); /* Wewnętrzny cień dla głębi */
+    /* Płynna animacja z elastycznym efektem */
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+}
+
+/* Efekt hover dla zdjęcia użytkownika */
+#user-photo:hover {
+    transform: scale(1.15) rotate(5deg);         /* Powiększenie o 15% + obrót o 5 stopni */
+    border-color: rgba(255, 255, 255, 1);       /* Jaśniejsza ramka przy hover */
+    /* Intensywniejsze cienie przy hover */
+    box-shadow: 
+        0 15px 40px rgba(0, 0, 0, 0.5),         /* Większy główny cień */
+        0 0 0 12px rgba(255, 255, 255, 0.2),    /* Większy świecący pierścień */
+        inset 0 0 0 3px rgba(255, 255, 255, 0.5); /* Jaśniejszy wewnętrzny cień */
+}
+
+/* ========== ULEPSZONA STYLIZACJA LISTY DANYCH ========== */
+ul.list-group {
+    border: 2px solid rgba(255, 255, 255, 0.3);  /* Półprzezroczysta biała ramka */
+    border-radius: 15px;                          /* Zaokrąglone rogi */
+    backdrop-filter: blur(5px);                   /* Rozmycie tła dla efektu szkła */
+    background: rgba(187, 244, 248, 0.9) !important;  /* Półprzezroczyste jasnoniebieskie tło */
+    /* Cienie dla efektu unoszenia */
+    box-shadow: 
+        0 8px 25px rgba(0, 0, 0, 0.15),          /* Główny cień pod listą */
+        inset 0 1px 0 rgba(255, 255, 255, 0.4);  /* Wewnętrzny cień na górze dla świetlnego efektu */
+}
+
+/* Stylizacja pojedynczych elementów listy */
+li.list-group-item {
+    border-bottom: 1px solid rgba(0, 123, 255, 0.3);  /* Niebieska linia oddzielająca (półprzezroczysta) */
+    background: rgba(187, 244, 248, 0.8) !important;   /* Nieco przezroczystsze tło niż lista */
+    transition: all 0.3s ease;                         /* Płynna animacja dla wszystkich zmian */
+    position: relative;                                 /* Pozwala na transform */
+}
+
+/* Efekt hover dla elementów listy */
+li.list-group-item:hover {
+    background: rgba(255, 255, 255, 0.9) !important;  /* Jasne tło przy hover */
+    transform: translateX(5px);                        /* Przesunięcie w prawo o 5px */
+    box-shadow: 5px 0 15px rgba(0, 123, 255, 0.2);   /* Niebieski cień po prawej stronie */
+}
+
+/* Zaokrąglenie rogów dla pierwszego elementu listy */
+li.list-group-item:first-child {
+    border-top-left-radius: 13px;   /* Zaokrąglony lewy górny róg */
+    border-top-right-radius: 13px;  /* Zaokrąglony prawy górny róg */
+}
+
+/* Zaokrąglenie rogów dla ostatniego elementu listy */
+li.list-group-item:last-child {
+    border-bottom-left-radius: 13px;   /* Zaokrąglony lewy dolny róg */
+    border-bottom-right-radius: 13px;  /* Zaokrąglony prawy dolny róg */
+    border-bottom: none;                /* Usuwa dolną ramkę dla ostatniego elementu */
 }
 
 
 
-/* Efekt wklęsły dla przycisków - wersja pogłębiona */
+/* ========== EFEKT WKLĘSŁY DLA PRZYCISKÓW ========== */
 .btn-concave {
-    position: relative;
-    border: 3px solid transparent;
+    position: relative;                    /* Pozwala na umieszczenie pseudo-elementów */
+    border: 3px solid transparent;         /* Przezroczysta ramka o grubości 3px */
+    /* Wielowarstwowe cienie tworzące efekt wklęsły (środek głębiej, krawędzie wyżej) */
     box-shadow: 
-        inset 6px 6px 12px rgba(0, 0, 0, 0.6),
-        inset -6px -6px 12px rgba(255, 255, 255, 0.8),
-        3px 3px 15px rgba(0, 0, 0, 0.3),
-        -2px -2px 8px rgba(255, 255, 255, 0.4);
+        inset 6px 6px 12px rgba(0, 0, 0, 0.6),        /* Ciemny cień wewnętrzny z lewej górnej strony */
+        inset -6px -6px 12px rgba(255, 255, 255, 0.8), /* Jasny cień wewnętrzny z prawej dolnej strony */
+        3px 3px 15px rgba(0, 0, 0, 0.3),              /* Zewnętrzny cień dla głębi */
+        -2px -2px 8px rgba(255, 255, 255, 0.4);       /* Zewnętrzny jasny cień dla kontrastu */
+    transition: all 0.3s ease;            /* Płynna animacja dla wszystkich zmian */
+}
+
+/* Efekt hover dla przycisków z efektem wklęsłym */
+.btn-concave:hover {
+    /* Pogłębione cienie przy hover dla większego efektu wklęsłego */
+    box-shadow: 
+        inset 8px 8px 16px rgba(0, 0, 0, 0.7),        /* Ciemniejszy i większy cień wewnętrzny */
+        inset -8px -8px 16px rgba(255, 255, 255, 0.9), /* Jaśniejszy i większy jasny cień wewnętrzny */
+        2px 2px 10px rgba(0, 0, 0, 0.2),              /* Mniejszy zewnętrzny cień */
+        -1px -1px 5px rgba(255, 255, 255, 0.3);       /* Mniejszy zewnętrzny jasny cień */
+    animation: floating 2s ease-in-out infinite;       /* Animacja pływania góra-dół */
+}
+
+/* Efekt aktywacji przycisku (po kliknięciu) */
+.btn-concave:active {
+    /* Najgłębsze cienie - przycisk wygląda jak bardzo wciśnięty */
+    box-shadow: 
+        inset 10px 10px 20px rgba(0, 0, 0, 0.8),      /* Bardzo ciemny wewnętrzny cień */
+        inset -10px -10px 20px rgba(255, 255, 255, 1), /* Bardzo jasny wewnętrzny cień */
+        1px 1px 5px rgba(0, 0, 0, 0.1);               /* Minimalny zewnętrzny cień */
+    transform: translateY(3px);            /* Przesunięcie w dół o 3px - efekt wciśnięcia */
+}
+
+/* ========== KOLORY PRZYCISKÓW Z EFEKTEM WKLĘSŁYM ========== */
+/* Niebieski przycisk główny (Generate Random User) */
+.btn-primary.btn-concave {
+    /* Radialny gradient od środka - tworzy efekt wklęśnięcia */
+    background: radial-gradient(circle at 30% 30%, #0a58ca, #0d6efd, #084298);
+    border-color: #0d6efd;  /* Niebieska ramka */
+}
+
+/* Zielony przycisk sukcesu (Copy User Data) */
+.btn-success.btn-concave {
+    /* Radialny gradient w odcieniach zieleni */
+    background: radial-gradient(circle at 30% 30%, #146c43, #198754, #0f5132);
+    border-color: #198754;  /* Zielona ramka */
+}
+
+/* Turkusowy przycisk informacyjny (Copy User Photo) */
+.btn-info.btn-concave {
+    /* Radialny gradient w odcieniach turkusu */
+    background: radial-gradient(circle at 30% 30%, #087990, #0dcaf0, #31d2f2);
+    border-color: #0dcaf0;  /* Turkusowa ramka */
+}
+
+/* ========== ANIMACJA PŁYWANIA PRZYCISKÓW ========== */
+@keyframes floating {
+    0% {
+        transform: translateY(0px);   /* Pozycja początkowa */
+    }
+    50% {
+        transform: translateY(-2px);  /* Unoszenie w górę o 2px */
+    }
+    100% {
+        transform: translateY(0px);   /* Powrót do pozycji początkowej */
+    }
+}
+
+/* ========== ULEPSZONA STYLIZACJA KONTENERA GŁÓWNEGO ========== */
+main.container {
+    position: relative;  /* Pozwala na z-index */
+    z-index: 1;         /* Znajduje się nad tłem, ale pod floating particles */
+}
+
+/* ========== EFEKT POŚWIATY WOKÓŁ KOLUMNY ========== */
+.col-md-5 {
+    position: relative;  /* Pozwala na umieszczenie pseudo-elementów */
+}
+
+/* Pseudo-element tworzący subtelną poświatę wokół głównej karty */
+.col-md-5::before {
+    content: '';          /* Pusty pseudo-element */
+    position: absolute;   /* Pozycjonowanie względem kolumny */
+    top: -20px;          /* 20px powyżej kolumny */
+    left: -20px;         /* 20px po lewej stronie kolumny */
+    right: -20px;        /* 20px po prawej stronie kolumny */
+    bottom: -20px;       /* 20px poniżej kolumny */
+    /* Gradient poświaty - jaśniejszy po bokach */
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.1) 0%,   /* Jasny początek */
+        transparent 50%,                /* Przezroczysty środek */
+        rgba(255, 255, 255, 0.05) 100%); /* Delikatnie jasny koniec */
+    border-radius: 50px;  /* Bardzo zaokrąglone rogi */
+    z-index: -1;         /* Za kolumną */
+    opacity: 0;          /* Początkowo niewidoczna */
+    transition: all 0.6s ease;  /* Płynna animacja pojawiania się */
+}
+
+/* Aktywacja poświaty przy hover na kolumnie */
+.col-md-5:hover::before {
+    opacity: 1;               /* Staje się widoczna */
+    transform: scale(1.02);   /* Lekkie powiększenie */
+}
+
+/* ========== ULEPSZONA STYLIZACJA NAGŁÓWKA ========== */
+header {
+    position: relative;  /* Pozwala na umieszczenie pseudo-elementów */
+    overflow: hidden;    /* Ukrywa elementy wychodzące poza nagłówek */
+}
+
+/* Pseudo-element tworzący efekt błyszczenia w nagłówku */
+header::before {
+    content: '';          /* Pusty pseudo-element */
+    position: absolute;   /* Pozycjonowanie względem nagłówka */
+    top: 0;
+    left: -100%;         /* Startuje poza lewą krawędzią */
+    width: 200%;         /* Dwukrotna szerokość nagłówka */
+    height: 100%;        /* Pełna wysokość nagłówka */
+    /* Gradient tworzący efekt świetlny przesuwający się w poprzek */
+    background: linear-gradient(90deg, 
+        transparent 0%,                    /* Przezroczysty początek */
+        rgba(255, 255, 255, 0.1) 50%,     /* Biały środek */
+        transparent 100%);                 /* Przezroczysty koniec */
+    
+}
+header h1::before {
+    animation: headerShine 3s linear infinite; /* Animacja przesuwającego się światła */
+    z-index: 1;         /* Nad innymi elementami nagłówka */
+}
+@keyframes headerShine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Enhanced badge styling */
+.badge {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
     transition: all 0.3s ease;
 }
 
-.btn-concave:hover {
-    box-shadow: 
-        inset 8px 8px 16px rgba(0, 0, 0, 0.7),
-        inset -8px -8px 16px rgba(255, 255, 255, 0.9),
-        2px 2px 10px rgba(0, 0, 0, 0.2),
-        -1px -1px 5px rgba(255, 255, 255, 0.3);
-    animation: floating 2s ease-in-out infinite;
+.badge:hover {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
 }
 
-.btn-concave:active {
-    box-shadow: 
-        inset 10px 10px 20px rgba(0, 0, 0, 0.8),
-        inset -10px -10px 20px rgba(255, 255, 255, 1),
-        1px 1px 5px rgba(0, 0, 0, 0.1);
-    transform: translateY(3px);
+/* Enhanced icon styling in header */
+header img {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
 }
 
-/* Zachowanie oryginalnych kolorów dla konkretnych przycisków z pogłębionym efektem */
-.btn-primary.btn-concave {
-    background: radial-gradient(circle at 30% 30%, #0a58ca, #0d6efd, #084298);
-    border-color: #0d6efd;
+header img:hover {
+    transform: scale(1.1) rotate(10deg);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
 }
 
-.btn-success.btn-concave {
-    background: radial-gradient(circle at 30% 30%, #146c43, #198754, #0f5132);
-    border-color: #198754;
+/* Enhanced title styling */
+header h1 {
+    position: relative;
+    display: inline-block;
 }
 
-.btn-info.btn-concave {
-    background: radial-gradient(circle at 30% 30%, #087990, #0dcaf0, #31d2f2);
-    border-color: #0dcaf0;
+header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #fff, #00c6ff);
+    transition: width 0.6s ease;
 }
 
-/* Animacja pływania góra-dół */
-@keyframes floating {
+header h1:hover::after {
+    width: 100%;
+}
+
+/* ========== SYSTEM UNOSZĄCYCH SIĘ CZĄSTECZEK ========== */
+/* Kontener dla wszystkich cząsteczek */
+.floating-particles {
+    top: 0;
+    left: 0;
+    width: 100%;          /* Pokrywa cały ekran */
+    height: 100%;
+    pointer-events: none; /* Nie przeszkadza w klikaniu */
+    z-index: 0;          /* Za kartą, ale nad tłem */
+}
+
+/* Stylizacja pojedynczych cząsteczek */
+.particle {
+    position: absolute;                              /* Pozycjonowanie absolutne */
+    background: rgba(10, 255, 218, 0.7);          /* cyjankowe częściowo przeźroczyste kółka */
+    border-radius: 50%;                             /* Okrągły kształt */
+    animation: floatParticles 8s infinite linear;   /* Animacja unoszenia przez 8 sekund */
+}
+
+/* Pozycjonowanie i rozmiary dla każdej z 9 cząsteczek */
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; width: 4px; height: 4px; }  /* 1. cząsteczka */
+.particle:nth-child(2) { left: 20%; animation-delay: 1s; width: 6px; height: 6px; }  /* 2. cząsteczka */
+.particle:nth-child(3) { left: 30%; animation-delay: 2s; width: 3px; height: 3px; }  /* 3. cząsteczka */
+.particle:nth-child(4) { left: 40%; animation-delay: 3s; width: 5px; height: 5px; }  /* 4. cząsteczka */
+.particle:nth-child(5) { left: 50%; animation-delay: 4s; width: 4px; height: 4px; }  /* 5. cząsteczka */
+.particle:nth-child(6) { left: 60%; animation-delay: 5s; width: 6px; height: 6px; }  /* 6. cząsteczka */
+.particle:nth-child(7) { left: 70%; animation-delay: 6s; width: 3px; height: 3px; }  /* 7. cząsteczka */
+.particle:nth-child(8) { left: 80%; animation-delay: 7s; width: 5px; height: 5px; }  /* 8. cząsteczka */
+.particle:nth-child(9) { left: 90%; animation-delay: 8s; width: 4px; height: 4px; }  /* 9. cząsteczka */
+.particle:nth-child(10) { left: 5%; animation-delay: 9s; width: 6px; height: 6px; } /* 10. cząsteczka */
+.particle:nth-child(11) { left: 15%; animation-delay: 10s; width: 3px; height: 3px; } /* 11. cząsteczka */
+.particle:nth-child(12) { left: 25%; animation-delay: 11s; width: 5px; height: 5px; } /* 12. cząsteczka */
+.particle:nth-child(13) { left: 35%; animation-delay: 12s; width: 4px; height: 4px; } /* 13. cząsteczka */
+.particle:nth-child(14) { left: 45%; animation-delay: 13s; width: 6px; height: 6px; } /* 14. cząsteczka */
+.particle:nth-child(15) { left: 55%; animation-delay: 14s; width: 3px; height: 3px; } /* 15. cząsteczka */
+.particle:nth-child(16) { left: 65%; animation-delay: 15s; width: 5px; height: 5px; } /* 16. cząsteczka */
+.particle:nth-child(17) { left: 75%; animation-delay: 16s; width: 4px; height: 4px; } /* 17. cząsteczka */
+.particle:nth-child(18) { left: 85%; animation-delay: 17s; width: 6px; height: 6px; } /* 18. cząsteczka */
+.particle:nth-child(19) { left: 95%; animation-delay: 18s; width: 3px; height: 3px; } /* 19. cząsteczka */
+
+/* Animacja unoszenia cząsteczek */
+@keyframes floatParticles {
     0% {
-        transform: translateY(0px);
+        top: 100%;    /* Start: poniżej ekranu */
+        opacity: 0;   /* Niewidoczne */
     }
-    50% {
-        transform: translateY(-2px);
+    10% {
+        opacity: 1;   /* Pojawiają się */
+    }
+    90% {
+        opacity: 1;   /* Pozostają widoczne */
     }
     100% {
-        transform: translateY(0px);
+        top: -10%;    /* Koniec: powyżej ekranu */
+        opacity: 0;   /* Znikają */
     }
 }

@@ -54,8 +54,20 @@ function copyUserData() {
     });
 }
 
-// Function that copies user photo to clipboard (to be implemented for later)
-function copyUserPhoto() {}
+// Function that downoads user photo
+function copyUserPhoto() {
+    const img = document.getElementById('user-photo');
+    if (img) {
+        const link = document.createElement('a');
+        link.href = img.src;
+        link.download = 'user-photo.png';
+        document.body.appendChild(link);
+        link.click();
+        document.body.removeChild(link);
+    } else {
+        console.error("Element with id 'user-photo' not found in the DOM.");
+    }
+}
 
 // Custom alert functions
 function showCustomAlert(message) {
