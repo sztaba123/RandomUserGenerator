@@ -18,11 +18,11 @@ function displayUserPhoto(photoUrl){
 }
 
 function displayUserData(user) {
-    document.getElementById('name').textContent = `Name: ${user.name.first}`;
-    document.getElementById('surname').textContent = `Surname: ${user.name.last}`;
-    document.getElementById('email').textContent = `Email: ${user.email}`;
-    document.getElementById('phone').textContent = `Phone Number: ${user.phone}`;
-    document.getElementById('country').textContent = `Country: ${user.location.country}`;
+    document.getElementById('name').textContent = user.name.first;
+    document.getElementById('surname').textContent =  user.name.last;
+    document.getElementById('email').textContent =  user.email;
+    document.getElementById('phone').textContent =  user.phone;
+    document.getElementById('country').textContent =  user.location.country;
     document.getElementById('username').textContent = '@'+ user.login.username;
     document.getElementById('data-tittle').textContent = `${user.login.username.charAt(0).toUpperCase() + user.login.username.slice(1)}'s Data`;
 }

@@ -7,8 +7,8 @@
     <!-- Bootstrap 5.3 CSS -->
     <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.0/dist/css/bootstrap.min.css" rel="stylesheet">
     <script src="random_user.js"></script>
-    <link rel="stylesheet" href="style.css">
-    <link rel="stylesheet" href="customAlert.css">
+    <link rel="stylesheet" href="css/style.css">
+    <link rel="stylesheet" href="css/customAlert.css">
 </head>
 <body class="">
     <header class="bg-gradient-primary text-white text-center py-5 mb-0 position-relative" style="background: linear-gradient(90deg, #007bff 0%, #00c6ff 100%);">
@@ -33,19 +33,67 @@
                                 <h5 class="card-title text-center" id="data-tittle">User Data</h5>
                             <!-- Placeholder for user data -->
                             <ul class="list-group list-group-flush data-list">
-                                <li class="list-group-item" id="name"></li>
-                                <li class="list-group-item" id="surname"></li>
-                                <li class="list-group-item" id="email"></li>
-                                <li class="list-group-item" id="phone"></li>
-                                <li class="list-group-item" id="country"></li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <div class="row w-100 align-items-center">
+                                        <div class="col-1 text-center">
+                                            <i class="bi bi-person-fill text-primary"></i>
+                                        </div>
+                                        <div class="col-4 fw-semibold">First Name:</div>
+                                        <div class="col-7 fw-semibold" id="name"></div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <div class="row w-100 align-items-center">
+                                        <div class="col-1 text-center">
+                                            <i class="bi bi-person-badge-fill text-info"></i>
+                                        </div>
+                                        <div class="col-4 fw-semibold">Last Name:</div>
+                                        <div class="col-7 fw-semibold" id="surname"></div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <div class="row w-100 align-items-center">
+                                        <div class="col-1 text-center">
+                                            <i class="bi bi-envelope-fill text-success"></i>
+                                        </div>
+                                        <div class="col-4 fw-semibold">Email:</div>
+                                        <div class="col-7 fw-semibold" id="email"></div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <div class="row w-100 align-items-center">
+                                        <div class="col-1 text-center">
+                                            <i class="bi bi-telephone-fill text-warning"></i>
+                                        </div>
+                                        <div class="col-4 fw-semibold">Phone:</div>
+                                        <div class="col-7 fw-semibold" id="phone"></div>
+                                    </div>
+                                </li>
+                                <li class="list-group-item d-flex align-items-center">
+                                    <div class="row w-100 align-items-center">
+                                        <div class="col-1 text-center">
+                                            <i class="bi bi-geo-alt-fill text-danger"></i>
+                                        </div>
+                                        <div class="col-4 fw-semibold">Country:</div>
+                                        <div class="col-7 fw-semibold" id="country"></div>
+                                    </div>
+                                </li>
                             </ul>
                         </div>
                     </div>
                     <div class="buttons text-center">
-                        <button class="btn btn-primary m-1 w-75" id="generate-user" onclick="generateRandomUser()">Generate Random User</button>
-                        <button class="btn btn-success m-1 w-75" id="copy-data" onclick="copyUserData()">Copy User Data</button>
-                        <button class="btn btn-success m-1 mb-3 w-75" id="copy-photo" onclick="copyUserPhoto()">Copy User Photo</button>
+                        <button class="btn btn-primary btn-concave m-2 px-4 py-2 rounded-pill shadow-sm" id="generate-user" onclick="generateRandomUser()">
+                            <i class="bi bi-person-plus"></i> Generate Random User
+                        </button>
+                        <button class="btn btn-success btn-concave m-2 px-4 py-2 rounded-pill shadow-sm" id="copy-data" onclick="copyUserData()">
+                            <i class="bi bi-clipboard"></i> Copy User Data
+                        </button>
+                        <button class="btn btn-info btn-concave m-2 px-4 py-2 rounded-pill shadow-sm" id="copy-photo" onclick="copyUserPhoto()">
+                            <i class="bi bi-image"></i> Copy User Photo
+                        </button>
                     </div>
+                    <!-- Add Bootstrap Icons CDN in <head> if not already included -->
+                    <link rel="stylesheet" href="https://cdn.jsdelivr.net/npm/bootstrap-icons@1.10.5/font/bootstrap-icons.css">
                 </div>
                 
             </div>
