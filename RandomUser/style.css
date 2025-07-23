@@ -1,0 +1,29 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #b1eaff;
+}
+
+#user-photo {
+    border: 2px solid black;
+    border-radius: 50%;
+}   
+
+.card {
+    background-color: rgb(106, 160, 253);
+    border: 1px solid #007bff;
+}
+
+ul.list-group{
+    border: 1px solid #007bff;
+    border-radius: 10px;
+}
+
+li.list-group-item {
+    border-bottom: 1px solid #000;
+}
+
+ul.list-group, li.list-group-item {
+    background-color: #bbf4f8 !important;
+}
