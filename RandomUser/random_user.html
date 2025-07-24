@@ -53,56 +53,17 @@
                             <!-- Placeholder for photo -->
                             <img src="" class="rounded-circle img-fluid shadow photo-border" alt="user-photo" id="user-photo">
                         </div>
-                        <div class="mb-3">
+                        <div class="mb-3 align-items-center">
                                 <h5 class="card-title text-center" id="data-tittle">User Data</h5>
                             <!-- Placeholder for user data -->
-                            <ul class="list-group list-group-flush data-list">
-                                <li class="list-group-item d-flex align-items-center">
-                                    <div class="row w-100 align-items-center">
-                                        <div class="col-1 text-center">
-                                            <i class="bi bi-person-fill text-primary"></i>
-                                        </div>
-                                        <div class="col-4 fw-semibold">First Name:</div>
-                                        <div class="col-7 fw-semibold" id="name"></div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <div class="row w-100 align-items-center">
-                                        <div class="col-1 text-center">
-                                            <i class="bi bi-person-badge-fill text-info"></i>
-                                        </div>
-                                        <div class="col-4 fw-semibold">Last Name:</div>
-                                        <div class="col-7 fw-semibold" id="surname"></div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <div class="row w-100 align-items-center">
-                                        <div class="col-1 text-center">
-                                            <i class="bi bi-envelope-fill text-success"></i>
-                                        </div>
-                                        <div class="col-4 fw-semibold">Email:</div>
-                                        <div class="col-7 fw-semibold" id="email"></div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <div class="row w-100 align-items-center">
-                                        <div class="col-1 text-center">
-                                            <i class="bi bi-telephone-fill text-warning"></i>
-                                        </div>
-                                        <div class="col-4 fw-semibold">Phone:</div>
-                                        <div class="col-7 fw-semibold" id="phone"></div>
-                                    </div>
-                                </li>
-                                <li class="list-group-item d-flex align-items-center">
-                                    <div class="row w-100 align-items-center">
-                                        <div class="col-1 text-center">
-                                            <i class="bi bi-geo-alt-fill text-danger"></i>
-                                        </div>
-                                        <div class="col-4 fw-semibold">Country:</div>
-                                        <div class="col-7 fw-semibold" id="country"></div>
-                                    </div>
-                                </li>
+                            <ul class="list-group list-group-flush data-list" id="data-list">
+                                <!-- Dane będą wyświetlane dynamicznie przez JavaScript -->
                             </ul>
+                            <div class="d-flex gap-3 justify-content-center align-items-center mt-3 data-selection">
+                                <i class="bi bi-fingerprint data-icon active" id="data" onclick="selectData('data')" title="Personal Data"></i>
+                                <i class="bi bi-map-fill data-icon" id="localisation" onclick="selectData('localisation')" title="Location"></i>
+                                <i class="bi bi-telephone-fill data-icon" id="contact" onclick="selectData('contact')" title="Contact Info"></i>
+                            </div>
                         </div>
                     </div>
                     <div class="buttons text-center">
@@ -192,6 +153,7 @@
             <h3>✅ Success!</h3>
             <p id="alertMessagePhoto">User photo downloaded</p>
             <button onclick="closeCustomAlertPhoto()">OK</button>
+        </div>
     </div>
 
     <!-- Bootstrap 5.3 JS Bundle -->

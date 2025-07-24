@@ -1,24 +1,8 @@
-/* ========== STYLIZACJA TŁA STRONY ========== */
-body {
-    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sa        inset 0 1px 0 rgba(255, 255, 255, 0.6),  /* Jaśniejszy cień wewnętrzny na górze */
-        inset 0 -1px 0 rgba(0, 0, 0, 0.2);       /* Ciemniejszy cień wewnętrzny na dole */
-    border-color: rgba(255, 255, 255, 0.5);      /* Jaśniejsza ramka */
-}
+/* =================================================================== */
+/* ==================== ORGANIZACJA CSS WEDŁUG STRUKTURY STRONY ==================== */
+/* =================================================================== */
 
-/* Animacja shimmer - ruch świetlnego paska */
-@keyframes shimmer {
-    0% {
-        transform: translateX(-100%) translateY(-100%) rotate(45deg);  /* Start: lewy górny róg */
-    }
-    50% {
-        transform: translateX(0%) translateY(0%) rotate(45deg);        /* Środek: centrum karty */
-    }
-    100% {
-        transform: translateX(100%) translateY(100%) rotate(45deg);    /* Koniec: prawy dolny róg */
-    }
-}
-
-/* ========== STYLIZACJA TŁA STRONY ========== */
+/* ========== 1. GLOBALNE STYLE BODY I TŁO STRONY ========== */
 body {
     font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif; /* Nowoczesna czcionka systemu Windows */
     margin: 0;
@@ -67,19 +51,183 @@ body::before {
     }
 }
 
-/* ========== STYLIZACJA ZDJĘCIA UŻYTKOWNIKA ========== */
-#user-photo {
-    border: 2px solid black;  /* Czarna ramka wokół zdjęcia */
-    border-radius: 50%;       /* Okrągły kształt */
+/* ========== 2. SYSTEM UNOSZĄCYCH SIĘ CZĄSTECZEK (TŁO) ========== */
+/* Kontener dla wszystkich cząsteczek */
+.floating-particles {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100%;          /* Pokrywa cały ekran */
+    height: 100%;
+    pointer-events: none; /* Nie przeszkadza w klikaniu */
+    z-index: 0;          /* Za kartą, ale nad tłem */
 }
 
-/* Efekt hover dla zdjęcia (stary - zostanie nadpisany przez nowy poniżej) */
-#user-photo:hover {
-    transform: scale(1.1);           /* Powiększenie o 10% */
-    transition: transform 0.3s ease; /* Płynna animacja przez 0.3 sekundy */
+/* Stylizacja pojedynczych cząsteczek */
+.particle {
+    position: absolute;                              /* Pozycjonowanie absolutne */
+    background: rgba(10, 255, 218, 0.7);          /* Cyjankowe częściowo przezroczyste kółka */
+    border-radius: 50%;                             /* Okrągły kształt */
+    animation: floatParticles 8s infinite linear;   /* Animacja unoszenia przez 8 sekund */
 }
 
-/* ========== STYLIZACJA GŁÓWNEJ KARTY ========== */
+/* Pozycjonowanie i rozmiary dla każdej z 19 cząsteczek */
+.particle:nth-child(1) { left: 10%; animation-delay: 0s; width: 4px; height: 4px; }
+.particle:nth-child(2) { left: 20%; animation-delay: 1s; width: 6px; height: 6px; }
+.particle:nth-child(3) { left: 30%; animation-delay: 2s; width: 3px; height: 3px; }
+.particle:nth-child(4) { left: 40%; animation-delay: 3s; width: 5px; height: 5px; }
+.particle:nth-child(5) { left: 50%; animation-delay: 4s; width: 4px; height: 4px; }
+.particle:nth-child(6) { left: 60%; animation-delay: 5s; width: 6px; height: 6px; }
+.particle:nth-child(7) { left: 70%; animation-delay: 6s; width: 3px; height: 3px; }
+.particle:nth-child(8) { left: 80%; animation-delay: 7s; width: 5px; height: 5px; }
+.particle:nth-child(9) { left: 90%; animation-delay: 8s; width: 4px; height: 4px; }
+.particle:nth-child(10) { left: 5%; animation-delay: 9s; width: 6px; height: 6px; }
+.particle:nth-child(11) { left: 15%; animation-delay: 10s; width: 3px; height: 3px; }
+.particle:nth-child(12) { left: 25%; animation-delay: 11s; width: 5px; height: 5px; }
+.particle:nth-child(13) { left: 35%; animation-delay: 12s; width: 4px; height: 4px; }
+.particle:nth-child(14) { left: 45%; animation-delay: 13s; width: 6px; height: 6px; }
+.particle:nth-child(15) { left: 55%; animation-delay: 14s; width: 3px; height: 3px; }
+.particle:nth-child(16) { left: 65%; animation-delay: 15s; width: 5px; height: 5px; }
+.particle:nth-child(17) { left: 75%; animation-delay: 16s; width: 4px; height: 4px; }
+.particle:nth-child(18) { left: 85%; animation-delay: 17s; width: 6px; height: 6px; }
+.particle:nth-child(19) { left: 95%; animation-delay: 18s; width: 3px; height: 3px; }
+
+/* Animacja unoszenia cząsteczek */
+@keyframes floatParticles {
+    0% {
+        top: 100%;    /* Start: poniżej ekranu */
+        opacity: 0;   /* Niewidoczne */
+    }
+    10% {
+        opacity: 1;   /* Pojawiają się */
+    }
+    90% {
+        opacity: 1;   /* Pozostają widoczne */
+    }
+    100% {
+        top: -10%;    /* Koniec: powyżej ekranu */
+        opacity: 0;   /* Znikają */
+    }
+}
+
+/* ========== 3. STYLIZACJA NAGŁÓWKA (HEADER) ========== */
+header {
+    position: relative;  /* Pozwala na umieszczenie pseudo-elementów */
+    overflow: hidden;    /* Ukrywa elementy wychodzące poza nagłówek */
+}
+
+/* Pseudo-element tworzący efekt błyszczenia w nagłówku */
+header::before {
+    content: '';          /* Pusty pseudo-element */
+    position: absolute;   /* Pozycjonowanie względem nagłówka */
+    top: 0;
+    left: -100%;         /* Startuje poza lewą krawędzią */
+    width: 200%;         /* Dwukrotna szerokość nagłówka */
+    height: 100%;        /* Pełna wysokość nagłówka */
+    /* Gradient tworzący efekt świetlny przesuwający się w poprzek */
+    background: linear-gradient(90deg, 
+        transparent 0%,                    /* Przezroczysty początek */
+        rgba(255, 255, 255, 0.1) 50%,     /* Biały środek */
+        transparent 100%);                 /* Przezroczysty koniec */
+}
+
+/* Animacja nagłówka */
+header h1::before {
+    animation: headerShine 3s linear infinite; /* Animacja przesuwającego się światła */
+    z-index: 1;         /* Nad innymi elementami nagłówka */
+}
+
+@keyframes headerShine {
+    0% {
+        left: -100%;
+    }
+    100% {
+        left: 100%;
+    }
+}
+
+/* Stylizacja ikon w nagłówku */
+header img {
+    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
+    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
+}
+
+header img:hover {
+    transform: scale(1.1) rotate(10deg);
+    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
+}
+
+/* Stylizacja tytułu nagłówka */
+header h1 {
+    position: relative;
+    display: inline-block;
+}
+
+header h1::after {
+    content: '';
+    position: absolute;
+    bottom: -5px;
+    left: 0;
+    width: 0;
+    height: 3px;
+    background: linear-gradient(90deg, #fff, #00c6ff);
+    transition: width 0.6s ease;
+}
+
+header h1:hover::after {
+    width: 100%;
+}
+
+/* Stylizacja odznaki w nagłówku */
+.badge {
+    backdrop-filter: blur(10px);
+    border: 1px solid rgba(255, 255, 255, 0.3);
+    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
+    transition: all 0.3s ease;
+}
+
+.badge:hover {
+    transform: scale(1.1) rotate(-5deg);
+    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
+}
+
+/* ========== 4. KONTENER GŁÓWNY (MAIN) ========== */
+main.container {
+    position: relative;  /* Pozwala na z-index */
+    z-index: 1;         /* Znajduje się nad tłem, ale pod floating particles */
+}
+
+/* Efekt poświaty wokół głównej kolumny */
+.col-md-5 {
+    position: relative;  /* Pozwala na umieszczenie pseudo-elementów */
+}
+
+/* Pseudo-element tworzący subtelną poświatę wokół głównej karty */
+.col-md-5::before {
+    content: '';          /* Pusty pseudo-element */
+    position: absolute;   /* Pozycjonowanie względem kolumny */
+    top: -20px;          /* 20px powyżej kolumny */
+    left: -20px;         /* 20px po lewej stronie kolumny */
+    right: -20px;        /* 20px po prawej stronie kolumny */
+    bottom: -20px;       /* 20px poniżej kolumny */
+    /* Gradient poświaty - jaśniejszy po bokach */
+    background: linear-gradient(45deg, 
+        rgba(255, 255, 255, 0.1) 0%,   /* Jasny początek */
+        transparent 50%,                /* Przezroczysty środek */
+        rgba(255, 255, 255, 0.05) 100%); /* Delikatnie jasny koniec */
+    border-radius: 50px;  /* Bardzo zaokrąglone rogi */
+    z-index: -1;         /* Za kolumną */
+    opacity: 0;          /* Początkowo niewidoczna */
+    transition: all 0.6s ease;  /* Płynna animacja pojawiania się */
+}
+
+/* Aktywacja poświaty przy hover na kolumnie */
+.col-md-5:hover::before {
+    opacity: 1;               /* Staje się widoczna */
+    transform: scale(1.02);   /* Lekkie powiększenie */
+}
+
+/* ========== 5. STYLIZACJA GŁÓWNEJ KARTY ========== */
 .card {
     /* Gradient tła karty pod kątem 135° z różnymi odcieniami niebieskiego */
     background: linear-gradient(135deg, 
@@ -151,21 +299,7 @@ body::before {
     }
 }
 
-/* ========== STARE STYLE DLA LIST - DO NADPISANIA ========== */
-ul.list-group{
-    border: 1px solid #007bff;  /* Niebieska ramka */
-    border-radius: 10px;        /* Zaokrąglone rogi */
-}
-
-li.list-group-item {
-    border-bottom: 1px solid #000;  /* Czarna linia oddzielająca elementy listy */
-}
-
-ul.list-group, li.list-group-item {
-    background-color: #bbf4f8 !important;  /* Jasnoniebieski kolor tła (wymuszony !important) */
-}
-
-/* ========== STYLIZACJA WNĘTRZA KARTY ========== */
+/* ========== 6. WNĘTRZE KARTY (CARD-BODY) ========== */
 .card-body {
     position: relative;  /* Pozwala na umieszczenie elementów absolutnych */
     z-index: 2;         /* Znajduje się nad pseudo-elementami */
@@ -189,7 +323,7 @@ ul.list-group, li.list-group-item {
     margin-bottom: 1.5rem !important;   /* Większy margines dolny */
 }
 
-/* ========== ULEPSZONA STYLIZACJA ZDJĘCIA UŻYTKOWNIKA ========== */
+/* ========== 7. ZDJĘCIE UŻYTKOWNIKA ========== */
 #user-photo {
     border: 4px solid rgba(255, 255, 255, 0.8);  /* Gruba półprzezroczysta biała ramka */
     border-radius: 50%;                           /* Okrągły kształt */
@@ -213,7 +347,7 @@ ul.list-group, li.list-group-item {
         inset 0 0 0 3px rgba(255, 255, 255, 0.5); /* Jaśniejszy wewnętrzny cień */
 }
 
-/* ========== ULEPSZONA STYLIZACJA LISTY DANYCH ========== */
+/* ========== 8. LISTA DANYCH UŻYTKOWNIKA ========== */
 ul.list-group {
     border: 2px solid rgba(255, 255, 255, 0.3);  /* Półprzezroczysta biała ramka */
     border-radius: 15px;                          /* Zaokrąglone rogi */
@@ -224,6 +358,8 @@ ul.list-group {
         0 8px 25px rgba(0, 0, 0, 0.15),          /* Główny cień pod listą */
         inset 0 1px 0 rgba(255, 255, 255, 0.4);  /* Wewnętrzny cień na górze dla świetlnego efektu */
 }
+
+
 
 /* Stylizacja pojedynczych elementów listy */
 li.list-group-item {
@@ -236,7 +372,6 @@ li.list-group-item {
 /* Efekt hover dla elementów listy */
 li.list-group-item:hover {
     background: rgba(255, 255, 255, 0.9) !important;  /* Jasne tło przy hover */
-    transform: translateX(5px);                        /* Przesunięcie w prawo o 5px */
     box-shadow: 5px 0 15px rgba(0, 123, 255, 0.2);   /* Niebieski cień po prawej stronie */
 }
 
@@ -253,9 +388,7 @@ li.list-group-item:last-child {
     border-bottom: none;                /* Usuwa dolną ramkę dla ostatniego elementu */
 }
 
-
-
-/* ========== EFEKT WKLĘSŁY DLA PRZYCISKÓW ========== */
+/* ========== 9. PRZYCISKI Z EFEKTEM WKLĘSŁYM ========== */
 .btn-concave {
     position: relative;                    /* Pozwala na umieszczenie pseudo-elementów */
     border: 3px solid transparent;         /* Przezroczysta ramka o grubości 3px */
@@ -276,7 +409,7 @@ li.list-group-item:last-child {
         inset -8px -8px 16px rgba(255, 255, 255, 0.9), /* Jaśniejszy i większy jasny cień wewnętrzny */
         2px 2px 10px rgba(0, 0, 0, 0.2),              /* Mniejszy zewnętrzny cień */
         -1px -1px 5px rgba(255, 255, 255, 0.3);       /* Mniejszy zewnętrzny jasny cień */
-    animation: floating 2s ease-in-out infinite;       /* Animacja pływania góra-dół */
+    animation: floating 1s ease-in-out infinite;       /* Animacja pływania góra-dół */
 }
 
 /* Efekt aktywacji przycisku (po kliknięciu) */
@@ -289,7 +422,7 @@ li.list-group-item:last-child {
     transform: translateY(3px);            /* Przesunięcie w dół o 3px - efekt wciśnięcia */
 }
 
-/* ========== KOLORY PRZYCISKÓW Z EFEKTEM WKLĘSŁYM ========== */
+/* Kolory przycisków z efektem wklęsłym */
 /* Niebieski przycisk główny (Generate Random User) */
 .btn-primary.btn-concave {
     /* Radialny gradient od środka - tworzy efekt wklęśnięcia */
@@ -311,7 +444,7 @@ li.list-group-item:last-child {
     border-color: #0dcaf0;  /* Turkusowa ramka */
 }
 
-/* ========== ANIMACJA PŁYWANIA PRZYCISKÓW ========== */
+/* Animacja pływania przycisków */
 @keyframes floating {
     0% {
         transform: translateY(0px);   /* Pozycja początkowa */
@@ -323,181 +456,58 @@ li.list-group-item:last-child {
         transform: translateY(0px);   /* Powrót do pozycji początkowej */
     }
 }
+/* ========== 10. STYLIZACJA WYBORU DANYCH ========== */
 
-/* ========== ULEPSZONA STYLIZACJA KONTENERA GŁÓWNEGO ========== */
-main.container {
-    position: relative;  /* Pozwala na z-index */
-    z-index: 1;         /* Znajduje się nad tłem, ale pod floating particles */
+/* Stylizacja sekcji wyboru danych */
+.data-selection {
+    margin-top: 1rem !important;                 /* Odstęp od góry */
+    padding: 15px;                               /* Wewnętrzny odstęp */
+    background: rgba(255, 255, 255, 0.1);       /* Subtelne tło */
+    border-radius: 15px;                         /* Zaokrąglone rogi */
+    backdrop-filter: blur(5px);                  /* Efekt szkła */
 }
 
-/* ========== EFEKT POŚWIATY WOKÓŁ KOLUMNY ========== */
-.col-md-5 {
-    position: relative;  /* Pozwala na umieszczenie pseudo-elementów */
+/* Stylizacja ikon wyboru danych */
+.data-icon {
+    font-size: 0.8rem !important;                 /* Dwukrotnie większe ikony (x2) */
+    color: rgba(13, 110, 253, 0.8);            /* Niebieski kolor bazowy */
+    cursor: pointer;                             /* Kursor wskazujący */
+    padding: 12px;                              /* Obszar kliknięcia */
+    border-radius: 50%;                         /* Okrągłe tło */
+    background: rgba(255, 255, 255, 0.2);      /* Subtelne tło */
+    transition: all 0.3s cubic-bezier(0.175, 0.885, 0.32, 1.275);  /* Płynna animacja z elastycznością */
+    border: 2px solid transparent;              /* Przezroczysta ramka */
 }
 
-/* Pseudo-element tworzący subtelną poświatę wokół głównej karty */
-.col-md-5::before {
-    content: '';          /* Pusty pseudo-element */
-    position: absolute;   /* Pozycjonowanie względem kolumny */
-    top: -20px;          /* 20px powyżej kolumny */
-    left: -20px;         /* 20px po lewej stronie kolumny */
-    right: -20px;        /* 20px po prawej stronie kolumny */
-    bottom: -20px;       /* 20px poniżej kolumny */
-    /* Gradient poświaty - jaśniejszy po bokach */
-    background: linear-gradient(45deg, 
-        rgba(255, 255, 255, 0.1) 0%,   /* Jasny początek */
-        transparent 50%,                /* Przezroczysty środek */
-        rgba(255, 255, 255, 0.05) 100%); /* Delikatnie jasny koniec */
-    border-radius: 50px;  /* Bardzo zaokrąglone rogi */
-    z-index: -1;         /* Za kolumną */
-    opacity: 0;          /* Początkowo niewidoczna */
-    transition: all 0.6s ease;  /* Płynna animacja pojawiania się */
+/* Efekt hover dla ikon wyboru danych */
+.data-icon:hover {
+    transform: translateY(-4px) scale(1.2);     /* Unoszenie w górę o 8px + powiększenie o 20% */
+    color: #e74c3c;                             /* Czerwony kolor przy hover */
+    background: rgba(255, 255, 255, 0.4);      /* Jaśniejsze tło */
+    border-color: rgba(231, 76, 60, 0.4);      /* Czerwona ramka */
+    box-shadow: 
+        0 12px 25px rgba(231, 76, 60, 0.3),    /* Czerwony cień pod ikoną */
+        0 0 20px rgba(231, 76, 60, 0.2);       /* Świecący efekt wokół ikony */
 }
 
-/* Aktywacja poświaty przy hover na kolumnie */
-.col-md-5:hover::before {
-    opacity: 1;               /* Staje się widoczna */
-    transform: scale(1.02);   /* Lekkie powiększenie */
+/* Efekt aktywny dla ikon wyboru danych */
+.data-icon:active {
+    transform: translateY(-4px) scale(1.1);     /* Mniejsze unoszenie przy kliknięciu */
+    transition: all 0.1s ease;                  /* Szybsza animacja przy kliknięciu */
 }
 
-/* ========== ULEPSZONA STYLIZACJA NAGŁÓWKA ========== */
-header {
-    position: relative;  /* Pozwala na umieszczenie pseudo-elementów */
-    overflow: hidden;    /* Ukrywa elementy wychodzące poza nagłówek */
+/* Styl dla aktywnej ikony (wybrana kategoria) */
+.data-icon.active {
+    color: #28a745 !important;                  /* Zielony kolor dla aktywnej ikony */
+    background: rgba(40, 167, 69, 0.2);        /* Zielone tło */
+    border-color: rgba(40, 167, 69, 0.6);      /* Zielona ramka */
+    transform: scale(1.1);                      /* Lekko powiększona */
+    box-shadow: 
+        0 8px 20px rgba(40, 167, 69, 0.4),     /* Zielony cień */
+        0 0 15px rgba(40, 167, 69, 0.3);       /* Świecący efekt */
 }
 
-/* Pseudo-element tworzący efekt błyszczenia w nagłówku */
-header::before {
-    content: '';          /* Pusty pseudo-element */
-    position: absolute;   /* Pozycjonowanie względem nagłówka */
-    top: 0;
-    left: -100%;         /* Startuje poza lewą krawędzią */
-    width: 200%;         /* Dwukrotna szerokość nagłówka */
-    height: 100%;        /* Pełna wysokość nagłówka */
-    /* Gradient tworzący efekt świetlny przesuwający się w poprzek */
-    background: linear-gradient(90deg, 
-        transparent 0%,                    /* Przezroczysty początek */
-        rgba(255, 255, 255, 0.1) 50%,     /* Biały środek */
-        transparent 100%);                 /* Przezroczysty koniec */
-    
-}
-header h1::before {
-    animation: headerShine 3s linear infinite; /* Animacja przesuwającego się światła */
-    z-index: 1;         /* Nad innymi elementami nagłówka */
-}
-@keyframes headerShine {
-    0% {
-        left: -100%;
-    }
-    100% {
-        left: 100%;
-    }
-}
-
-/* Enhanced badge styling */
-.badge {
-    backdrop-filter: blur(10px);
-    border: 1px solid rgba(255, 255, 255, 0.3);
-    box-shadow: 0 4px 15px rgba(0, 0, 0, 0.2);
-    transition: all 0.3s ease;
-}
-
-.badge:hover {
-    transform: scale(1.1) rotate(-5deg);
-    box-shadow: 0 6px 20px rgba(0, 0, 0, 0.3);
-}
-
-/* Enhanced icon styling in header */
-header img {
-    transition: all 0.4s cubic-bezier(0.175, 0.885, 0.32, 1.275);
-    filter: drop-shadow(0 4px 8px rgba(0, 0, 0, 0.3));
-}
-
-header img:hover {
-    transform: scale(1.1) rotate(10deg);
-    filter: drop-shadow(0 6px 12px rgba(0, 0, 0, 0.4));
-}
-
-/* Enhanced title styling */
-header h1 {
-    position: relative;
-    display: inline-block;
-}
-
-header h1::after {
-    content: '';
-    position: absolute;
-    bottom: -5px;
-    left: 0;
-    width: 0;
-    height: 3px;
-    background: linear-gradient(90deg, #fff, #00c6ff);
-    transition: width 0.6s ease;
-}
-
-header h1:hover::after {
-    width: 100%;
-}
-
-/* ========== SYSTEM UNOSZĄCYCH SIĘ CZĄSTECZEK ========== */
-/* Kontener dla wszystkich cząsteczek */
-.floating-particles {
-    top: 0;
-    left: 0;
-    width: 100%;          /* Pokrywa cały ekran */
-    height: 100%;
-    pointer-events: none; /* Nie przeszkadza w klikaniu */
-    z-index: 0;          /* Za kartą, ale nad tłem */
-}
-
-/* Stylizacja pojedynczych cząsteczek */
-.particle {
-    position: absolute;                              /* Pozycjonowanie absolutne */
-    background: rgba(10, 255, 218, 0.7);          /* cyjankowe częściowo przeźroczyste kółka */
-    border-radius: 50%;                             /* Okrągły kształt */
-    animation: floatParticles 8s infinite linear;   /* Animacja unoszenia przez 8 sekund */
-}
-
-/* Pozycjonowanie i rozmiary dla każdej z 9 cząsteczek */
-.particle:nth-child(1) { left: 10%; animation-delay: 0s; width: 4px; height: 4px; }  /* 1. cząsteczka */
-.particle:nth-child(2) { left: 20%; animation-delay: 1s; width: 6px; height: 6px; }  /* 2. cząsteczka */
-.particle:nth-child(3) { left: 30%; animation-delay: 2s; width: 3px; height: 3px; }  /* 3. cząsteczka */
-.particle:nth-child(4) { left: 40%; animation-delay: 3s; width: 5px; height: 5px; }  /* 4. cząsteczka */
-.particle:nth-child(5) { left: 50%; animation-delay: 4s; width: 4px; height: 4px; }  /* 5. cząsteczka */
-.particle:nth-child(6) { left: 60%; animation-delay: 5s; width: 6px; height: 6px; }  /* 6. cząsteczka */
-.particle:nth-child(7) { left: 70%; animation-delay: 6s; width: 3px; height: 3px; }  /* 7. cząsteczka */
-.particle:nth-child(8) { left: 80%; animation-delay: 7s; width: 5px; height: 5px; }  /* 8. cząsteczka */
-.particle:nth-child(9) { left: 90%; animation-delay: 8s; width: 4px; height: 4px; }  /* 9. cząsteczka */
-.particle:nth-child(10) { left: 5%; animation-delay: 9s; width: 6px; height: 6px; } /* 10. cząsteczka */
-.particle:nth-child(11) { left: 15%; animation-delay: 10s; width: 3px; height: 3px; } /* 11. cząsteczka */
-.particle:nth-child(12) { left: 25%; animation-delay: 11s; width: 5px; height: 5px; } /* 12. cząsteczka */
-.particle:nth-child(13) { left: 35%; animation-delay: 12s; width: 4px; height: 4px; } /* 13. cząsteczka */
-.particle:nth-child(14) { left: 45%; animation-delay: 13s; width: 6px; height: 6px; } /* 14. cząsteczka */
-.particle:nth-child(15) { left: 55%; animation-delay: 14s; width: 3px; height: 3px; } /* 15. cząsteczka */
-.particle:nth-child(16) { left: 65%; animation-delay: 15s; width: 5px; height: 5px; } /* 16. cząsteczka */
-.particle:nth-child(17) { left: 75%; animation-delay: 16s; width: 4px; height: 4px; } /* 17. cząsteczka */
-.particle:nth-child(18) { left: 85%; animation-delay: 17s; width: 6px; height: 6px; } /* 18. cząsteczka */
-.particle:nth-child(19) { left: 95%; animation-delay: 18s; width: 3px; height: 3px; } /* 19. cząsteczka */
-
-/* Animacja unoszenia cząsteczek */
-@keyframes floatParticles {
-    0% {
-        top: 100%;    /* Start: poniżej ekranu */
-        opacity: 0;   /* Niewidoczne */
-    }
-    10% {
-        opacity: 1;   /* Pojawiają się */
-    }
-    90% {
-        opacity: 1;   /* Pozostają widoczne */
-    }
-    100% {
-        top: -10%;    /* Koniec: powyżej ekranu */
-        opacity: 0;   /* Znikają */
-    }
-}
-
-/* ========== STYLIZACJA PIĘKNEJ STOPKI ========== */
+/* ========== 11. STYLIZACJA STOPKI (FOOTER) ========== */
 .fancy-footer {
     position: relative;
     margin-top: 60px;                           /* Zmniejszony margines z 80px na 60px */
@@ -619,7 +629,7 @@ header h1:hover::after {
     }
 }
 
-/* ========== CZĄSTECZKI W STOPCE ========== */
+/* Cząsteczki w stopce */
 .footer-particles {
     position: absolute;
     top: 0;
@@ -673,4 +683,19 @@ header h1:hover::after {
         transform: translateY(-10px) translateX(-15px);
         opacity: 0.4;
     }
+}
+
+/* ========== 11. STARE STYLE - DO USUNIĘCIA LUB NADPISANIA ========== */
+/* Te style są nadpisywane przez nowe powyżej */
+ul.list-group{
+    border: 1px solid #007bff;  /* Niebieska ramka */
+    border-radius: 10px;        /* Zaokrąglone rogi */
+}
+
+li.list-group-item {
+    border-bottom: 1px solid #000;  /* Czarna linia oddzielająca elementy listy */
+}
+
+ul.list-group, li.list-group-item {
+    background-color: #bbf4f8 !important;  /* Jasnoniebieski kolor tła (wymuszony !important) */
 }
